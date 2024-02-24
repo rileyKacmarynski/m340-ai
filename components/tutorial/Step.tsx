@@ -2,8 +2,8 @@ export default function Step({
   title,
   children,
 }: {
-  title: string;
-  children: React.ReactNode;
+  title: string
+  children: React.ReactNode
 }) {
   return (
     <li className="mx-4">
@@ -14,11 +14,9 @@ export default function Step({
       >
         {title}
       </label>
-      <div
-        className={`mx-6 text-foreground/80 text-sm peer-checked:line-through`}
-      >
+      <div className={`mx-6 text-foreground/80 text-sm peer-checked:line-through`}>
         {children}
       </div>
     </li>
-  );
+  )
 }
