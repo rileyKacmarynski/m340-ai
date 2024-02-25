@@ -13,9 +13,9 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={GeistSans.className}>
-      <body className="bg-background text-foreground">
-        <main className="min-h-screen flex flex-col items-center">{children}</main>
+    <html lang="en" style={{ colorScheme: 'dark' }} className={GeistSans.className}>
+      <body className="bg-zinc-950 bg-[radial-gradient(circle_at_65%_25%,#18181b_60%,transparent)] text-zinc-50">
+        <main className="flex h-dvh flex-col items-center">{children}</main>
       </body>
     </html>
   )
