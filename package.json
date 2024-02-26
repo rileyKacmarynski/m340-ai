@@ -7,9 +7,11 @@
     "lint": "next lint --fix"
   },
   "dependencies": {
+    "@langchain/openai": "^0.0.14",
     "@radix-ui/react-slot": "^1.0.2",
     "@supabase/ssr": "latest",
     "@supabase/supabase-js": "latest",
+    "ai": "^2.2.36",
     "autoprefixer": "10.4.17",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",

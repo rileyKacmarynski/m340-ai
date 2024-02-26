@@ -1,0 +1,10 @@
+{
+  "imports": {
+    "@std/": "https://deno.land/std@0.168.0/",
+    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.39.7",
+    "ai": "https://esm.sh/ai@2.2.36",
+    "@langchain/openai": "https://esm.sh/@langchain/openai@0.0.14",
+    "@langchain/core": "https://esm.sh/@langchain/core@0.1.34",
+    "langchain": "https://esm.sh/langchain@0.1.21"
+  }
+}
