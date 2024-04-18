@@ -4,6 +4,7 @@ import { createClient } from '@/utils/supabase/server'
 import ConnectSupabaseSteps from '@/components/tutorial/ConnectSupabaseSteps'
 import SignUpUserSteps from '@/components/tutorial/SignUpUserSteps'
 import Header from '@/components/Header'
+import Logo from '@/components/Logo'
 
 export default async function Index() {
   const canInitSupabaseClient = () => {
@@ -22,14 +23,15 @@ export default async function Index() {
   return (
     <div className="flex w-full flex-1 flex-col items-center gap-20">
       <nav className="flex h-16 w-full justify-center border-b border-b-foreground/10">
-        <div className="flex w-full max-w-4xl items-center justify-between p-3 text-sm">
+        <div className="flex w-full max-w-5xl items-center justify-between p-3 text-sm">
+          <Logo />
           <div className="ml-auto">
             <AuthButton />
           </div>
         </div>
       </nav>
 
-      <div className="animate-in flex max-w-4xl flex-1 flex-col gap-20 px-3 opacity-0">
+      <div className="animate-in flex max-w-5xl flex-1 flex-col gap-20 px-3 opacity-0">
         <Header />
         <main className="flex flex-1 flex-col gap-6">
           <h2 className="mb-4 text-4xl font-bold">Next steps</h2>

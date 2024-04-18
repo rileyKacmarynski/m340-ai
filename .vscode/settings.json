@@ -4,5 +4,7 @@
   "deno.unstable": true,
   "[typescript]": {
     "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
-  }
+  },
+  "deno.enable": true,
+  "deno.importMap": "./supabase/functions/import_map.json"
 }

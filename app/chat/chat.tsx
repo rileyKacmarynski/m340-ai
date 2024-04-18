@@ -1,16 +1,33 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
+import { Input, TextArea } from '@/components/ui/input'
+import { Database, Tables } from '@/supabase/types'
 import { createClient } from '@/utils/supabase/client'
-import { useChat } from 'ai/react'
+import { Message, useChat } from 'ai/react'
+import { BotIcon, UserIcon } from 'lucide-react'
 import { FormEvent } from 'react'
 
-export default function Chat({ api }: { api: string }) {
+export default function Chat({
+  api,
+  document,
+}: {
+  api: string
+  document: Tables<'documents'>
+}) {
   const supabase = createClient()
   const { messages, input, handleInputChange, handleSubmit } = useChat({
     api,
+    initialMessages: [
+      {
+        id: '1',
+        content: 'Hello, ask me anything about your document.',
+        role: 'assistant',
+      },
+    ],
   })
+
+  console.log('messages', messages)
 
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -26,29 +43,74 @@ export default function Chat({ api }: { api: string }) {
           authorization: `Bearer ${session.access_token}`,
         },
         body: {
-          value: 'world',
+          documentId: document.id,
         },
       },
     })
   }
 
-  return (
-    <div className="mx-auto flex w-full max-w-lg flex-col">
-      <ul className="grow">
-        {messages.map((m, i) => (
-          <li key={i}>
-            {m.role === 'user' ? 'User: ' : 'AI: '}
-            {m.role === 'user' ? m.content : m.ui}
-          </li>
-        ))}
-      </ul>
+  const stuff: Message[] = [
+    { id: '123', role: 'user', content: 'this is a test message' },
+    { id: '1234', role: 'assistant', content: 'this is another test message' },
+    { id: '123234', role: 'user', content: 'this is a test message' },
+    { id: '12345464', role: 'assistant', content: 'this is another test message' },
+    { id: '123678576', role: 'user', content: 'this is a test message' },
+    { id: '12341111', role: 'assistant', content: 'this is another test message' },
+  ]
 
-      <form className="flex w-full items-center gap-2 p-2" onSubmit={submit}>
-        <Input autoFocus value={input} onChange={handleInputChange} />
-        <Button variant="secondary" type="submit">
-          Send
-        </Button>
-      </form>
+  return (
+    <div className="flex h-full flex-col gap-2">
+      <h1 className="ml-2 text-2xl font-medium text-zinc-200">{document.name}</h1>
+      <div className="flex h-full flex-col">
+        <div className="flex h-full flex-col p-2">
+          <ul className="flex grow flex-col gap-2 rounded-lg border border-zinc-50/10 bg-zinc-50/5 p-4 shadow-inner">
+            {messages.map((m, i) => (
+              <li key={i}>
+                {m.role === 'user' ? (
+                  <UserMessage message={m} />
+                ) : (
+                  <AiMessage message={m} />
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <form className="flex w-full items-end gap-4 p-2" onSubmit={submit}>
+          <Input autoFocus value={input} onChange={handleInputChange} />
+          <Button variant="default" type="submit">
+            Send
+          </Button>
+        </form>
+      </div>
+    </div>
+  )
+}
+
+function UserMessage({ message }: { message: Message }) {
+  return (
+    <div className="flex gap-4">
+      <div className="grid-rows relative size-6 rounded-full bg-sky-900 text-sky-400">
+        <UserIcon className="absolute inset-0 left-1/2 top-1/2 size-4 -translate-x-1/2 -translate-y-1/2" />
+      </div>
+      <div className="flex flex-col">
+        <div className="font-semibold text-zinc-300">You</div>
+        <div>{message.content}</div>
+      </div>
+    </div>
+  )
+}
+
+function AiMessage({ message }: { message: Message }) {
+  return (
+    <div className="flex gap-4">
+      <div className="grid-rows relative size-6 rounded-full bg-zinc-700 text-zinc-400">
+        <BotIcon className="absolute inset-0 left-1/2 top-1/2 size-4 -translate-x-1/2 -translate-y-1/2" />
+      </div>
+      <div className="flex flex-col">
+        <div className="font-semibold text-zinc-300">Assistant</div>
+        <div>{message.content}</div>
+      </div>
     </div>
   )
 }

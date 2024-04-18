@@ -7,7 +7,7 @@ create or replace function private.uuid_or_null(str text)
 returns uuid
 language plpgsql
 as $$
-begin 
+begin
   return str::uuid;
   exception when invalid_text_representation then
     return null;

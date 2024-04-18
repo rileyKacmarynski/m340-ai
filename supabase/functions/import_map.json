@@ -5,6 +5,9 @@
     "ai": "https://esm.sh/ai@2.2.36",
     "@langchain/openai": "https://esm.sh/@langchain/openai@0.0.14",
     "@langchain/core": "https://esm.sh/@langchain/core@0.1.34",
-    "langchain": "https://esm.sh/langchain@0.1.21"
+    "@langchain/core/prompts": "https://esm.sh/@langchain/core@0.1.34/prompts",
+    "langchain/util/document": "https://esm.sh/langchain/util/document",
+    "common-tags": "https://esm.sh/common-tags@1.8.2",
+    "openai": "https://esm.sh/openai"
   }
 }

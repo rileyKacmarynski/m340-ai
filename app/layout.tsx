@@ -15,7 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" style={{ colorScheme: 'dark' }} className={GeistSans.className}>
       <body className="bg-zinc-950 bg-[radial-gradient(circle_at_65%_25%,#18181b_60%,transparent)] text-zinc-50">
-        <main className="flex h-dvh flex-col items-center">{children}</main>
+        <div className="m-auto flex h-dvh flex-col items-center">{children}</div>
       </body>
     </html>
   )

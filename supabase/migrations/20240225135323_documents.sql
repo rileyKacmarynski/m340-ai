@@ -18,9 +18,9 @@ as
     on storage.objects.id = documents.storage_object_id;
 
 create table document_sections (
-  id bigint primary key generated always as identity,
-  document_id bigint not null references documents(id),
-  content text not null,
+  id bigserial primary key,
+  content text,
+  metadata jsonb,   -- will store user_id and document_id
   embedding vector (1536) -- TODO: Does this have to match token size of model?
 );
 
@@ -41,7 +41,7 @@ on documents for select to authenticated using (
 
 create policy "Users can insert document sections"
 on document_sections for insert to authenticated with check (
-  document_id in  (
+  (metadata->>'document_id')::bigint in (
     select id
     from documents
     where created_by = auth.uid()
@@ -50,13 +50,13 @@ on document_sections for insert to authenticated with check (
 
 create policy "Users can update their own document sections"
 on document_sections for update to authenticated using (
-  document_id in  (
+  (metadata->>'document_id')::bigint in (
     select id
     from documents
     where created_by = auth.uid()
   )
 ) with check (
-  document_id in  (
+  (metadata->>'document_id')::bigint in (
     select id
     from documents
     where created_by = auth.uid()
@@ -65,7 +65,7 @@ on document_sections for update to authenticated using (
 
 create policy "Users can query their own document sections"
 on document_sections for select to authenticated using (
-  document_id in  (
+  (metadata->>'document_id')::bigint in (
     select id
     from documents
     where created_by = auth.uid()
