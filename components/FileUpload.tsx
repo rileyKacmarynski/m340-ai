@@ -27,7 +27,6 @@ export default function FileUpload() {
       inputRef.current.value = ''
     }
 
-    // lets show that new file
     router.refresh()
   }
 

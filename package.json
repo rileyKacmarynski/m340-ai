@@ -2,11 +2,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "cron": "tsx watch --env-file='.env.local' ./cron/index.ts",
     "build": "next build",
     "start": "next start",
     "lint": "next lint --fix"
   },
   "dependencies": {
+    "@langchain/community": "^0.0.53",
+    "@langchain/core": "^0.1.61",
     "@langchain/openai": "^0.0.14",
     "@radix-ui/react-slot": "^1.0.2",
     "@supabase/ssr": "latest",
@@ -15,10 +18,14 @@
     "autoprefixer": "10.4.17",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "common-tags": "^1.8.2",
     "framer-motion": "^11.0.8",
     "geist": "^1.2.1",
+    "langchain": "^0.1.36",
     "lucide-react": "^0.344.0",
     "next": "latest",
+    "openai": "^4.38.5",
+    "pdf-parse": "^1.1.1",
     "postcss": "8.4.33",
     "prettier": "^3.2.5",
     "react": "18.2.0",
@@ -28,12 +35,14 @@
     "typescript": "5.3.3"
   },
   "devDependencies": {
+    "@types/common-tags": "^1.8.4",
     "@types/node": "20.11.5",
     "@types/react": "18.2.48",
     "@types/react-dom": "18.2.18",
     "encoding": "^0.1.13",
     "eslint-config-next": "^14.1.0",
     "eslint-config-prettier": "^9.1.0",
-    "prettier-plugin-tailwindcss": "^0.5.11"
+    "prettier-plugin-tailwindcss": "^0.5.11",
+    "tsx": "^4.7.3"
   }
 }

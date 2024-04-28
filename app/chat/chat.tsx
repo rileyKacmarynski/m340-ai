@@ -27,8 +27,6 @@ export default function Chat({
     ],
   })
 
-  console.log('messages', messages)
-
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
 
@@ -48,15 +46,6 @@ export default function Chat({
       },
     })
   }
-
-  const stuff: Message[] = [
-    { id: '123', role: 'user', content: 'this is a test message' },
-    { id: '1234', role: 'assistant', content: 'this is another test message' },
-    { id: '123234', role: 'user', content: 'this is a test message' },
-    { id: '12345464', role: 'assistant', content: 'this is another test message' },
-    { id: '123678576', role: 'user', content: 'this is a test message' },
-    { id: '12341111', role: 'assistant', content: 'this is another test message' },
-  ]
 
   return (
     <div className="flex h-full flex-col gap-2">
@@ -90,7 +79,7 @@ export default function Chat({
 function UserMessage({ message }: { message: Message }) {
   return (
     <div className="flex gap-4">
-      <div className="grid-rows relative size-6 rounded-full bg-sky-900 text-sky-400">
+      <div className="grid-rows relative size-6 rounded-full bg-indigo-900 text-indigo-400">
         <UserIcon className="absolute inset-0 left-1/2 top-1/2 size-4 -translate-x-1/2 -translate-y-1/2" />
       </div>
       <div className="flex flex-col">

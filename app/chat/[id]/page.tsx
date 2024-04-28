@@ -7,7 +7,7 @@ import { redirect } from 'next/navigation'
 import Chat from '@/app/chat/chat'
 import Logo from '@/components/Logo'
 
-const apiEndpoint = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/chat`
+const apiEndpoint = '/chat/api'
 
 export default async function ProtectedPage({ params }: { params: { id: string } }) {
   const supabase = createClient()

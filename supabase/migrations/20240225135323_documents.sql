@@ -1,4 +1,3 @@
-create extension if not exists pg_net with schema extensions;
 create extension if not exists vector with schema extensions;
 
 create table documents (
@@ -6,7 +5,8 @@ create table documents (
   name text not null,
   storage_object_id uuid not null references storage.objects,
   created_by uuid not null references auth.users (id) default auth.uid(),
-  created_at timestamp with time zone not null default now()
+  created_at timestamp with time zone not null default now(),
+  status text not null default 'initial'
 );
 
 create view documents_with_storage_path
@@ -31,6 +31,13 @@ alter table document_sections enable row level security;
 
 create policy "Users can insert documents"
 on documents for insert to authenticated with check (
+  auth.uid() = created_by
+);
+
+create policy "Users can update documents"
+on documents for update to authenticated using (
+  auth.uid() = created_by
+) with check (
   auth.uid() = created_by
 );
 
@@ -72,19 +79,6 @@ on document_sections for select to authenticated using (
   )
 );
 
-create function supabase_url()
-returns text
-language plpgsql
-security definer
-as $$
-  declare
-    secret_value text;
-  begin
-    select decrypted_secret into secret_value from vault.decrypted_secrets where name = 'supabase_url';
-    return secret_value;
-  end;
-$$;
-
 create function private.handle_storage_update()
 returns trigger
 language plpgsql
@@ -96,19 +90,6 @@ begin
   insert into documents (name, storage_object_id, created_by)
     values (new.path_tokens[2], new.id, new.owner)
     returning id into document_id;
-
-  select
-    net.http_post(
-      url := supabase_url() || '/functions/v1/process',
-      headers := jsonb_build_object(
-        'Content-Type', 'application/json',
-        'Authorization', current_setting('request.headers')::json->>'authorization'
-      ),
-      body := jsonb_build_object(
-        'document_id', document_id
-      )
-    )
-  into result;
 
   return null;
 end
