@@ -42,7 +42,7 @@ export default async function ProtectedPage({ params }: { params: { id: string }
         </nav>
       </div>
 
-      <div className="animate-in h-full w-full max-w-5xl px-3 opacity-0">
+      <div className="animate-in h-full w-full max-w-5xl overflow-hidden px-3 opacity-0">
         <Chat api={apiEndpoint} document={document} />
       </div>
     </div>

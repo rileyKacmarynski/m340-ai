@@ -2,11 +2,12 @@
 
 import { Button } from '@/components/ui/button'
 import { Input, TextArea } from '@/components/ui/input'
+import { ScrollArea } from '@/components/ui/scroll-area'
 import { Database, Tables } from '@/supabase/types'
 import { createClient } from '@/utils/supabase/client'
 import { Message, useChat } from 'ai/react'
 import { BotIcon, UserIcon } from 'lucide-react'
-import { FormEvent } from 'react'
+import { FormEvent, useEffect, useRef } from 'react'
 
 export default function Chat({
   api,
@@ -26,6 +27,10 @@ export default function Chat({
       },
     ],
   })
+  const scrollToBottomRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    scrollToBottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [messages])
 
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -48,30 +53,30 @@ export default function Chat({
   }
 
   return (
-    <div className="flex h-full flex-col gap-2">
-      <h1 className="ml-2 text-2xl font-medium text-zinc-200">{document.name}</h1>
-      <div className="flex h-full flex-col">
-        <div className="flex h-full flex-col p-2">
-          <ul className="flex grow flex-col gap-2 rounded-lg border border-zinc-50/10 bg-zinc-50/5 p-4 shadow-inner">
+    <div className="flex h-full flex-col gap-2 overflow-hidden">
+      <h1 className="ml-2 pb-3 text-2xl font-medium text-zinc-200">{document.name}</h1>
+      <ScrollArea className="full grow">
+        <div className="flex-1 space-y-2">
+          <section className="flex flex-col gap-2 overflow-auto p-4">
             {messages.map((m, i) => (
-              <li key={i}>
+              <div key={i}>
                 {m.role === 'user' ? (
                   <UserMessage message={m} />
                 ) : (
                   <AiMessage message={m} />
                 )}
-              </li>
+              </div>
             ))}
-          </ul>
+            <div ref={scrollToBottomRef} />
+          </section>
         </div>
-
-        <form className="flex w-full items-end gap-4 p-2" onSubmit={submit}>
-          <Input autoFocus value={input} onChange={handleInputChange} />
-          <Button variant="default" type="submit">
-            Send
-          </Button>
-        </form>
-      </div>
+      </ScrollArea>
+      <form className="flex w-full items-end gap-4 p-4" onSubmit={submit}>
+        <Input autoFocus value={input} onChange={handleInputChange} />
+        <Button variant="default" type="submit">
+          Send
+        </Button>
+      </form>
     </div>
   )
 }

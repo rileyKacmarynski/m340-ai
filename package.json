@@ -11,6 +11,7 @@
     "@langchain/community": "^0.0.53",
     "@langchain/core": "^0.1.61",
     "@langchain/openai": "^0.0.14",
+    "@radix-ui/react-scroll-area": "^1.0.5",
     "@radix-ui/react-slot": "^1.0.2",
     "@supabase/ssr": "latest",
     "@supabase/supabase-js": "latest",
